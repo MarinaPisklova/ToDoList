@@ -1,0 +1,11 @@
+.list{
+    &__tabs{
+        margin: auto;
+    }
+}
+
+.tabs{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}

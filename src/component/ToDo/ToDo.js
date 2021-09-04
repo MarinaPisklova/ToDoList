@@ -1,8 +1,11 @@
-import Note from "../Note/Note";
 import React from 'react';
 import styles from './ToDo.module.scss';
 import Counter from "../Counter/Counter";
 import Header from "../Header/Header";
+import { Form } from "react-bootstrap";
+import Tabs from "../Tabs/Tabs";
+import Notes from "../Notes/Notes";
+import Warning from '../Warning/Warning';
 
 class ToDo extends React.Component {
     constructor(props) {
@@ -15,6 +18,7 @@ class ToDo extends React.Component {
             ],
             newNoteText: '',
             isLengthMatch: true,
+            messageLength: 20,
         };
         this.tabs = [
             { type: 0, name: "Все", isActive: true },
@@ -27,6 +31,7 @@ class ToDo extends React.Component {
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onKeyPressHandler = this.onKeyPressHandler.bind(this);
         this.onClickTabs = this.onClickTabs.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     onChangeStatus(id) {
@@ -60,7 +65,7 @@ class ToDo extends React.Component {
 
     onChangeNote(e) {
         if (e.target.value !== '\n') {
-            if (e.target.value.length > 20) {
+            if (e.target.value.length > this.state.messageLength) {
                 this.setState({
                     isLengthMatch: false,
                 });
@@ -74,7 +79,12 @@ class ToDo extends React.Component {
         }
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
     onKeyPressHandler(event) {
+
         if (event.charCode === 13 && this.state.isLengthMatch) {
             if (this.state.newNoteText.length !== 0) {
                 let newNotes = this.state.notes;
@@ -116,27 +126,19 @@ class ToDo extends React.Component {
     }
 
     render() {
-        const ToDoItems = this.state.filteredNotes.map(item => <Note key={item.text} note={item} deleteNote={this.deleteNote} onChangeStatus={this.onChangeStatus} />);
-        const TabsItems = this.tabs.map(tab => <div className={tab.isActive ? (styles.tabs__item + " " + styles.tabs__item_active) : styles.tabs__item} key={tab.name} onClick={() => {
-            this.onClickTabs(tab.type);
-        }}>{tab.name}</div>);
-
         return (
             <div className={styles.todo}>
                 <Header />
                 <div>
                     <div className={styles.todo__input + ' ' + styles.input}>
-                        <textarea className={styles.input__textarea} onKeyPress={this.onKeyPressHandler} onChange={this.onChangeNote} value={this.state.newNoteText} placeholder="Записать что-то еще..." ></textarea>
-                        {
-                            !this.state.isLengthMatch
-                            && <p className={styles.input__warning}>Длина записи не может превышать 20</p>
-                        }
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Control className={styles.input__textarea} onKeyPress={this.onKeyPressHandler} onChange={this.onChangeNote} value={this.state.newNoteText} type="email" placeholder="Записать что-то еще..." />
+                        </Form>
+                        <Warning isLengthMatch={this.state.isLengthMatch} messageLength={this.state.messageLength}/>
                     </div>
                     <div className={styles.todo__list + ' ' + styles.list} >
-                        <div className={styles.list__tabs + ' ' + styles.tabs}>
-                            {TabsItems}
-                        </div>
-                        <ul className={styles.list__items + ' ' + styles.items}>{ToDoItems}</ul>
+                        <Tabs tabs={this.tabs} onClickTab={this.onClickTabs} />
+                        <Notes notes={this.state.filteredNotes} deleteNote={this.deleteNote} onChangeStatus={this.onChangeStatus} />
                     </div>
                 </div>
                 <Counter notes={this.state.notes} />

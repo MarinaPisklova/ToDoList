@@ -1,0 +1,22 @@
+.tabs{
+    &__item{
+        box-sizing: border-box;
+        flex-grow: 1;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #1d1d1d;
+        
+        border-top-left-radius: 10px;    
+        border-top-right-radius: 10px;    
+        color: rgb(187, 187, 187);
+        font-size: 12px;
+        text-align: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &__item_active{
+        background: linear-gradient(rgba(199, 131, 248, 0.7), rgb(68, 66, 66) 70%);
+        border-bottom: none;
+    }
+}

@@ -59,10 +59,10 @@
     &__input:checked + &__label::after {
         content: "";
         position: absolute;
-        left: 4px;
-        top: 0px;
-        width: 10px;
-        height: 5px;
+        left: 2px;
+        top: -1px;
+        width: 15px;
+        height: 8px;
         border-radius: 1px;
         border-left: 4px solid #ffffff;
         border-bottom: 4px solid #ffffff;

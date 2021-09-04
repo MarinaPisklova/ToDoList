@@ -1,0 +1,13 @@
+.list{
+    &__items{
+        margin: auto;
+    }
+}
+
+.items{
+    box-sizing: border-box;
+    width: 80%;
+    padding: 20px 0px;
+    border: 1px solid #1d1d1d;
+    border-top: none;
+}
