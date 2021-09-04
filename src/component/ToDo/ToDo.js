@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './ToDo.module.scss';
 import Counter from "../Counter/Counter";
 import Header from "../Header/Header";
-import { Form } from "react-bootstrap";
 import Tabs from "../Tabs/Tabs";
 import Notes from "../Notes/Notes";
 import Warning from '../Warning/Warning';
+import { Form } from "react-bootstrap";
 
 class ToDo extends React.Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class ToDo extends React.Component {
                 { id: 1, text: "Сделать уборку", status: true },
                 { id: 2, text: "Убрать зимние вещи", status: false },
             ],
+            filteredNotes: [],
             newNoteText: '',
             isLengthMatch: true,
             messageLength: 20,
